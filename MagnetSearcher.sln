@@ -3,12 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnetSearcher", "MagnetSearcher\MagnetSearcher.csproj", "{6C8E3D7A-BF10-4160-97C0-98FEBB64DFF6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetSearcher", "MagnetSearcher\MagnetSearcher.csproj", "{6C8E3D7A-BF10-4160-97C0-98FEBB64DFF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{619EB632-278D-440A-A57D-223C64900CE3}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetSearcher.Daemon", "MagnetSearcher.Daemon\MagnetSearcher.Daemon.csproj", "{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnerSearcher.Models", "MagnerSearcher.Models\MagnerSearcher.Models.csproj", "{E037FC03-4CF0-4BAB-B572-A07658D19DBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +24,14 @@ Global
 		{6C8E3D7A-BF10-4160-97C0-98FEBB64DFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C8E3D7A-BF10-4160-97C0-98FEBB64DFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C8E3D7A-BF10-4160-97C0-98FEBB64DFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

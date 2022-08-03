@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace SSAPI.Models {
+namespace MagnerSearcher.Models {
     public class MagnetInfo {
         [JsonProperty(PropertyName = "infohash")]
         public string InfoHash { get; set; }
@@ -15,11 +15,5 @@ namespace SSAPI.Models {
         public string RawMetaDataBase64 { get; set; }
         [JsonProperty(PropertyName = "getdatetime")]
         public long GetDateTime { get; set; }
-    }
-    public class MagnetFile {
-        [JsonProperty(PropertyName = "path")]
-        public List<string> Path { get; set; }
-        [JsonProperty(PropertyName = "length")]
-        public long Length { get; set; }
     }
 }
