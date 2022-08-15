@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SSAPI.Models;
+using MagnetSearcher.Models;
 using System.Linq;
 using System.Threading.Tasks;
 

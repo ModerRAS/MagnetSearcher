@@ -5,13 +5,13 @@ using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
-using MagnerSearcher.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using MagnetSearcher.Models;
 
 namespace MagnerSearcher.Managers {
     public class LuceneManager {
@@ -93,19 +93,19 @@ namespace MagnerSearcher.Managers {
             var total = top.TotalHits;
             var hits = top.ScoreDocs;
 
-            var messages = new List<Message>();
+            var magnetInfos = new List<MagnetInfo>();
             var id = 0;
             foreach (var hit in hits) {
                 if (id++ < Skip) continue;
                 var document = searcher.Doc(hit.Doc);
-                messages.Add(new Message() {
+                magnetInfos.Add(new MagnetInfo() {
                     Id = id,
                     MessageId = long.Parse(document.Get("MessageId")),
                     GroupId = long.Parse(document.Get("GroupId")),
                     Content = document.Get("Content")
                 });
             }
-            return (total, messages);
+            return (total, magnetInfos);
         }
     }
 }

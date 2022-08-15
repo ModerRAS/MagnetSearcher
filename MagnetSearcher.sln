@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决�
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetSearcher.Daemon", "MagnetSearcher.Daemon\MagnetSearcher.Daemon.csproj", "{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnerSearcher.Models", "MagnerSearcher.Models\MagnerSearcher.Models.csproj", "{E037FC03-4CF0-4BAB-B572-A07658D19DBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetSearcher.Models", "MagnetSearcher.Models\MagnetSearcher.Models.csproj", "{E037FC03-4CF0-4BAB-B572-A07658D19DBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
