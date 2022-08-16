@@ -2,22 +2,23 @@
 using MagnetSearcher.Models;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyNetQ;
 
 namespace MagnetSearcher.Controllers {
     [Route("v1/[controller]")]
+    [ApiController]
     public class DHTController : Controller {
+        private IBus Bus { get; set; }
+        public DHTController(IBus bus) {
+            this.Bus = bus;
+        }
         [HttpPost("add/{token}")]
         public async Task<IActionResult> AddMagnet(string token, [FromBody] MagnetInfo info) {
-            var db = Env.DHTDatabase;
-            var magnetInfo = db.GetCollection<MagnetInfo>("MagnetInfo");
-
-            var MagnetIsExists = magnetInfo.Find(magnet => magnet.InfoHash.Equals(info.InfoHash));
-            if (!MagnetIsExists.Any()) {
-                magnetInfo.Insert(info);
-                magnetInfo.EnsureIndex(x => x.InfoHash);
-                return Ok("Inserted");
+            if (token.Equals(Env.RootToken) || Env.RootToken.Equals(string.Empty)) {
+                await Bus.PubSub.PublishAsync<MagnetInfo>(info);
+                return Ok(info);
             } else {
-                return Ok("Exists");
+                return Forbid();
             }
         }
     }

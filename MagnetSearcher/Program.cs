@@ -5,6 +5,7 @@ namespace MagnetSearcher {
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.RegisterEasyNetQ(Env.EasyNetQConnectiongString);
 
             var app = builder.Build();
 

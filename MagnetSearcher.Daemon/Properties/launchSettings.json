@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MagnetSearcher.Daemon": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "EasyNetQConnectiongString": "\"host=localhost\""
+      }
+    }
+  }
+}

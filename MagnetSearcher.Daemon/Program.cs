@@ -20,7 +20,6 @@ namespace MagnetSearcher.Daemon {
                 logging.AddFilter("System", LogLevel.Warning)
                   .AddFilter("Microsoft", LogLevel.Warning))
                 .Build();
-            host.Services.GetService<IServiceResolver>()
         }
     }
 }

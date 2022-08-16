@@ -29,6 +29,7 @@ namespace MagnerSearcher.Managers {
                 writer.Flush(triggerMerge: true, applyAllDeletes: true);
                 writer.Commit();
             } catch (ArgumentNullException ex) {
+                Console.WriteLine(ex.Message);
             }
         }
         public void WriteDocuments(IEnumerable<MagnetInfo> infos) {
@@ -42,6 +43,7 @@ namespace MagnerSearcher.Managers {
                         doc.Add(new TextField("Files", JsonConvert.SerializeObject(info.Files, Formatting.Indented), Field.Store.YES));
                         writer.AddDocument(doc);
                     } catch (ArgumentNullException ex) {
+                        Console.WriteLine(ex.Message);
                     }
 
                 }
@@ -99,10 +101,9 @@ namespace MagnerSearcher.Managers {
                 if (id++ < Skip) continue;
                 var document = searcher.Doc(hit.Doc);
                 magnetInfos.Add(new MagnetInfo() {
-                    Id = id,
-                    MessageId = long.Parse(document.Get("MessageId")),
-                    GroupId = long.Parse(document.Get("GroupId")),
-                    Content = document.Get("Content")
+                    InfoHash = document.Get("InfoHash"),
+                    Name = document.Get("Name"),
+                    Files = !string.IsNullOrEmpty(document.Get("Files")) ? JsonConvert.DeserializeObject<List<MagnetFile>>(document.Get("Files")) : new List<MagnetFile>()
                 });
             }
             return (total, magnetInfos);
