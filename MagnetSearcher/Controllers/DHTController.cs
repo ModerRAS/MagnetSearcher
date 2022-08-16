@@ -15,7 +15,7 @@ namespace MagnetSearcher.Controllers {
         [HttpPost("add/{token}")]
         public async Task<IActionResult> AddMagnet(string token, [FromBody] MagnetInfo info) {
             if (token.Equals(Env.RootToken) || Env.RootToken.Equals(string.Empty)) {
-                await Bus.PubSub.PublishAsync<MagnetInfo>(info);
+                await Bus.PubSub.PublishAsync(info);
                 return Ok(info);
             } else {
                 return Forbid();
