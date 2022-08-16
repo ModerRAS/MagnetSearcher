@@ -1,0 +1,36 @@
+﻿@using MagnetSearcher.Models;
+@model ResponseSearchOption;
+@{
+    ViewData["Title"] = "Search Page";
+}
+<div class="text-center">
+    <table>
+        <thead>
+            <tr>
+                <th>入库时间</th>
+                <th>种子名</th>
+                <th>磁力链</th>
+                <th>大小</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var info in Model.Info) {
+                <tr>
+                    <td>
+                        <span>@DateTime.FromBinary(info.GetDateTime)</span>
+                    </td>
+                    <td>
+                        <span>@info.Name</span>
+                    </td>
+                    <td>
+                        <a href="magnet:?xt=urn:btih:@info.InfoHash">下载</a>
+                    </td>
+                    <td>
+                        <span>@info.Length</span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
