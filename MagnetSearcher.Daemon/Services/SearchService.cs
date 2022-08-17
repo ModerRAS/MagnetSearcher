@@ -18,6 +18,7 @@ namespace MagnetSearcher.Daemon.Services {
             return new ResponseSearchOption() {
                 Id = data.Id,
                 Count = total,
+                KeyWord = data.KeyWord,
                 Info = MagnetInfos,
                 Skip = data.Skip,
                 Take = data.Take
