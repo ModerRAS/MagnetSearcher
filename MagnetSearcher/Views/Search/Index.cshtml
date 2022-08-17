@@ -32,5 +32,15 @@
             }
         </tbody>
     </table>
-    
+    <table>
+        <thead>
+            <tr>
+                @for (var i = 0; i < Model.Count; i+=Model.Take)
+                {
+                    var pagenumber = i / Model.Take + 1;
+                    <th><a href="/Search/?KeyWord=@Model.KeyWord&Skip=@i&Take=@Model.Take">@pagenumber</a></th>
+                }
+            </tr>
+        </thead>
+    </table>
 </div>
