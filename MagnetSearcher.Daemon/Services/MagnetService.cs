@@ -1,4 +1,5 @@
-﻿using MagnetSearcher.Daemon.Interfaces;
+﻿using MagnerSearcher.Managers;
+using MagnetSearcher.Daemon.Interfaces;
 using MagnetSearcher.Models;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace MagnetSearcher.Daemon.Services {
     public class MagnetService : IService<MagnetInfo, bool>{
-        public Task<bool> ExecAsync(MagnetInfo data) {
+        private LuceneManager luceneManager { get; set; }
+        public MagnetService(LuceneManager luceneManager) { 
+            this.luceneManager = luceneManager;
+        }
+        public async Task PushToLiteDB(MagnetInfo data) {
             var db = Env.DHTDatabase;
             var magnetInfo = db.GetCollection<MagnetInfo>("MagnetInfo");
 
@@ -17,7 +22,14 @@ namespace MagnetSearcher.Daemon.Services {
                 magnetInfo.Insert(data);
                 magnetInfo.EnsureIndex(x => x.InfoHash);
             }
-            return Task.FromResult(true);
+        }
+        public async Task PushToLucene(MagnetInfo data) {
+            await luceneManager.WriteDocumentAsync(data);
+        }
+        public async Task<bool> ExecAsync(MagnetInfo data) {
+            await PushToLiteDB(data);
+            await PushToLucene(data);
+            return true;
         }
     }
 }
