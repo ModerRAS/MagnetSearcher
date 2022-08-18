@@ -55,7 +55,7 @@ pipeline {
           }
           steps {
             sh 'sshpass -p $SERVER_CREDENTIALS_PSW scp -r ./MagnetSearcher.Daemon/app/out $SERVER_CREDENTIALS_USR@$SERVER_IP:/home/MagnetSearcher.Daemon '
-            sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/MagnetSearcher.Daemon && pm2 restart MagnetSearcher.Daemon"'
+            sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/MagnetSearcher.Daemon && pm2 restart dotnet"'
           }
         }
         stage('Deploy to MagnetSearcher Server') {
