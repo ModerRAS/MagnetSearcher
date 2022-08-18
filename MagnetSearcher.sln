@@ -8,11 +8,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "解决方案项", "解决方案项", "{619EB632-278D-440A-A57D-223C64900CE3}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		Jenkinsfile = Jenkinsfile
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetSearcher.Daemon", "MagnetSearcher.Daemon\MagnetSearcher.Daemon.csproj", "{7D21DEE1-8AFE-4DD2-995F-5B9B9D9484EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagnetSearcher.Models", "MagnetSearcher.Models\MagnetSearcher.Models.csproj", "{E037FC03-4CF0-4BAB-B572-A07658D19DBA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagnetSearcher.Cli.Test", "MagnetSearcher.Cli.Test\MagnetSearcher.Cli.Test.csproj", "{61525EB5-7C51-40DF-ACC9-81C512BAB457}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E037FC03-4CF0-4BAB-B572-A07658D19DBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61525EB5-7C51-40DF-ACC9-81C512BAB457}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61525EB5-7C51-40DF-ACC9-81C512BAB457}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61525EB5-7C51-40DF-ACC9-81C512BAB457}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61525EB5-7C51-40DF-ACC9-81C512BAB457}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
