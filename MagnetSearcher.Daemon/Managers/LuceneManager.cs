@@ -53,7 +53,7 @@ namespace MagnetSearcher.Daemon.Managers {
 
         }
         private IndexWriter GetIndexWriter(long GroupId) {
-            var dir = FSDirectory.Open($"Data/Index_Data_{GroupId}");
+            var dir = FSDirectory.Open($"{Env.BasePath}/Data/Index_Data_{GroupId}");
             var analyzer = new SmartChineseAnalyzer(LuceneVersion.LUCENE_48);
             var indexConfig = new IndexWriterConfig(LuceneVersion.LUCENE_48, analyzer);
             IndexWriter writer = new IndexWriter(dir, indexConfig);
@@ -81,7 +81,7 @@ namespace MagnetSearcher.Daemon.Managers {
             return keyworkds;
         }
         public (int, List<MagnetInfo>) Search(string q, int Skip, int Take) {
-            IndexReader reader = DirectoryReader.Open(FSDirectory.Open($"Data/Index_Data_0"));
+            IndexReader reader = DirectoryReader.Open(FSDirectory.Open($"{Env.BasePath}/Data/Index_Data_0"));
 
             var searcher = new IndexSearcher(reader);
 
