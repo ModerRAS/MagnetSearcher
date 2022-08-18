@@ -1,5 +1,5 @@
-﻿using MagnerSearcher.Managers;
-using MagnetSearcher.Daemon.Interfaces;
+﻿using MagnetSearcher.Daemon.Interfaces;
+using MagnetSearcher.Daemon.Managers;
 using MagnetSearcher.Models;
 using System;
 using System.Collections.Generic;

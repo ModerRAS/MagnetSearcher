@@ -1,10 +1,11 @@
-﻿using MagnerSearcher.Managers;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using EasyNetQ.DI.Microsoft;
 using EasyNetQ.DI;
 using MagnetSearcher.Daemon.Interfaces;
+using MagnetSearcher.Daemon.Services;
+using MagnetSearcher.Daemon.Managers;
 
 namespace MagnetSearcher.Daemon {
     public static class Program {
@@ -13,13 +14,14 @@ namespace MagnetSearcher.Daemon {
                 .ConfigureServices(service => {
                     service.AddSingleton<ILoggerFactory, LoggerFactory>();
                     service.AddSingleton<LuceneManager>();
+                    service.AddScoped<MagnetService>();
+                    service.AddScoped<SearchService>();
                     service.RegisterEasyNetQ(Env.EasyNetQConnectiongString);
                     service.Scan(scan => scan
                         .FromAssemblyOf<IController>()
-                        .AddClasses(classes => classes
-                            .AssignableTo<IController>())
-                            .AsImplementedInterfaces()
-                            .WithTransientLifetime()
+                        .AddClasses(classes => classes.AssignableTo<IController>())
+                        .AsImplementedInterfaces()
+                        .WithTransientLifetime()
                     );
                 });
         public static void Main(string[] args) {

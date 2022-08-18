@@ -13,6 +13,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
+        "RootToken": "12345",
         "EasyNetQConnectiongString": "host=localhost"
       },
       "applicationUrl": "http://localhost:5257",

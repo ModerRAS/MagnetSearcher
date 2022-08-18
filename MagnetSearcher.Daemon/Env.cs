@@ -1,6 +1,6 @@
 ﻿using LiteDB;
 
-namespace MagnetSearcher {
+namespace MagnetSearcher.Daemon {
     public class Env {
         public static readonly LiteDatabase DHTDatabase = new LiteDatabase("DHT.db");
         public static readonly string EasyNetQConnectiongString = Environment.GetEnvironmentVariable("EasyNetQConnectiongString") ?? string.Empty;

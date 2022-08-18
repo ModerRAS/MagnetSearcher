@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using MagnetSearcher.Models;
 
-namespace MagnerSearcher.Managers {
+namespace MagnetSearcher.Daemon.Managers {
     public class LuceneManager {
         public LuceneManager() {
         }

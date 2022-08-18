@@ -3,7 +3,7 @@
     "MagnetSearcher.Daemon": {
       "commandName": "Project",
       "environmentVariables": {
-        "EasyNetQConnectiongString": "\"host=localhost\""
+        "EasyNetQConnectiongString": "host=localhost"
       }
     }
   }

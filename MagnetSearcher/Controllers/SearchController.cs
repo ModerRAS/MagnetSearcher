@@ -9,7 +9,7 @@ namespace MagnetSearcher.Controllers {
             this.Bus = bus;
         }
         public async Task<IActionResult> Index(string KeyWord, int Skip, int Take) {
-            var option = await TestSearch(KeyWord, Skip, Take);
+            var option = await Search(KeyWord, Skip, Take);
             return View(option);
         }
         public async Task<ResponseSearchOption> Search(string KeyWord, int Skip, int Take) {

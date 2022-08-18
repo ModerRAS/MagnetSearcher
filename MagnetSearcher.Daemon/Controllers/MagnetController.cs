@@ -18,7 +18,6 @@ namespace MagnetSearcher.Daemon.Controllers {
         }
         public async Task ExecAsync() {
             await Bus.PubSub.SubscribeAsync<MagnetInfo>("MagnetService", magnetService.ExecAsync);
-
         }
     }
 }

@@ -17,9 +17,7 @@ namespace MagnetSearcher.Daemon.Controllers {
             this.searchService = searchService;
         }
         public async Task ExecAsync() {
-            while (true) {
-                await Bus.Rpc.RespondAsync<RequestSearchOption, ResponseSearchOption>(searchService.ExecAsync);
-            }
+            await Bus.Rpc.RespondAsync<RequestSearchOption, ResponseSearchOption>(searchService.ExecAsync);
         }
     }
 }
