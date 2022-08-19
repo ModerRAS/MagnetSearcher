@@ -13,22 +13,19 @@ namespace MagnetSearcher.Daemon.Services {
         public MagnetService(LuceneManager luceneManager) { 
             this.luceneManager = luceneManager;
         }
-        public async Task PushToLiteDB(MagnetInfo data) {
+        public async Task<bool> ExecAsync(MagnetInfo data) {
             var db = Env.DHTDatabase;
             var magnetInfo = db.GetCollection<MagnetInfo>("MagnetInfo");
 
             var MagnetIsExists = magnetInfo.Find(magnet => magnet.InfoHash.Equals(data.InfoHash));
+            var first = MagnetIsExists.First();
             if (!MagnetIsExists.Any()) {
                 magnetInfo.Insert(data);
                 magnetInfo.EnsureIndex(x => x.InfoHash);
+                await luceneManager.WriteDocumentAsync(data);
+            } else if (string.IsNullOrEmpty(first.RawMetaDataBase64)) {
+                magnetInfo.Update(data);
             }
-        }
-        public async Task PushToLucene(MagnetInfo data) {
-            await luceneManager.WriteDocumentAsync(data);
-        }
-        public async Task<bool> ExecAsync(MagnetInfo data) {
-            await PushToLiteDB(data);
-            await PushToLucene(data);
             return true;
         }
     }
