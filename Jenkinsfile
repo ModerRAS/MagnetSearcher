@@ -16,7 +16,7 @@ pipeline {
           steps {
             sh 'dotnet publish ./MagnetSearcher/MagnetSearcher.csproj -c Release -o ./MagnetSearcher/app/out -r linux-x64 --self-contained false'
           }
-        }
+    }
     stage('Build MagnetSearcher.Daemon Project') {
           environment {
             version = "1.0.${env.BUILD_NUMBER}"
@@ -24,8 +24,14 @@ pipeline {
           steps {
             sh 'dotnet publish ./MagnetSearcher.Daemon/MagnetSearcher.Daemon.csproj -c Release -o ./MagnetSearcher.Daemon/app/out -r linux-x64 --self-contained false'
           }
-        }
+    }
     stage('Build MagnetSearcher Docker Image') {
+      when {
+        anyOf {
+          branch 'master'
+          tag '*'
+        }
+      }
       environment {
         version = "1.0.${env.BUILD_NUMBER}"
       }
@@ -34,6 +40,12 @@ pipeline {
       }
     }
     stage('Push to Registry') {
+      when {
+        anyOf {
+          branch 'master'
+          tag '*'
+        }
+      }
       environment {
         version = "1.0.${env.BUILD_NUMBER}"
       }
@@ -42,6 +54,12 @@ pipeline {
       }
     }
     stage('Delete Local Images And Deploy to Production Server') {
+      when {
+        anyOf {
+          branch 'master'
+          tag '*'
+        }
+      }
       parallel {
         stage('Delete Local Images') {
           steps {
@@ -50,8 +68,8 @@ pipeline {
         }
         stage('Deploy to MagnetSearcher.Daemon Server') {
           environment {
-            SERVER_CREDENTIALS=credentials('98b0a39a-5abe-472b-b48b-b135e4c14880')
-            SERVER_IP=credentials('4f50de2e-ab27-48fd-9cc1-4f69be1d510b')
+            SERVER_CREDENTIALS = credentials('98b0a39a-5abe-472b-b48b-b135e4c14880')
+            SERVER_IP = credentials('4f50de2e-ab27-48fd-9cc1-4f69be1d510b')
           }
           steps {
             sh 'sshpass -p $SERVER_CREDENTIALS_PSW scp -r ./MagnetSearcher.Daemon/app/out $SERVER_CREDENTIALS_USR@$SERVER_IP:/home/MagnetSearcher.Daemon '
@@ -60,8 +78,8 @@ pipeline {
         }
         stage('Deploy to MagnetSearcher Server') {
           environment {
-            SERVER_CREDENTIALS=credentials('868e1509-ec55-4a4e-9296-042ca7e8b0eb')
-            SERVER_IP=credentials('3e762d69-418d-4283-95ac-913f19d7fe4e')
+            SERVER_CREDENTIALS = credentials('868e1509-ec55-4a4e-9296-042ca7e8b0eb')
+            SERVER_IP = credentials('3e762d69-418d-4283-95ac-913f19d7fe4e')
           }
           steps {
             sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/typecho && docker pull registry.miaostay.com/magnetsearcher && docker-compose up -d"'
