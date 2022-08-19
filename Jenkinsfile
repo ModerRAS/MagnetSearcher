@@ -29,7 +29,6 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          tag '*'
         }
       }
       environment {
@@ -43,7 +42,6 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          tag '*'
         }
       }
       environment {
@@ -57,7 +55,6 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          tag '*'
         }
       }
       parallel {
