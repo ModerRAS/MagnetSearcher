@@ -30,7 +30,12 @@ pipeline {
         version = "1.0.${env.BUILD_NUMBER}"
       }
       steps {
-        sh 'docker build --no-cache -t registry.miaostay.com/magnetsearcher -f Dockerfile ./MagnetSearcher'
+        if (env.BRANCH_NAME == 'master') {
+            sh 'docker build --no-cache -t registry.miaostay.com/magnetsearcher -f Dockerfile ./MagnetSearcher'
+        } else {
+            echo 'I only execute on the master branch'
+        }
+        
       }
     }
     stage('Push to Registry') {
@@ -38,14 +43,23 @@ pipeline {
         version = "1.0.${env.BUILD_NUMBER}"
       }
       steps {
-        sh 'docker push registry.miaostay.com/magnetsearcher'
+        if (env.BRANCH_NAME == 'master') {
+            sh 'docker push registry.miaostay.com/magnetsearcher'
+        } else {
+            echo 'I only execute on the master branch'
+        }
       }
     }
     stage('Delete Local Images And Deploy to Production Server') {
       parallel {
         stage('Delete Local Images') {
           steps {
-            sh 'docker images|grep none|awk \'{print $3 }\'|xargs docker rmi'
+            if (env.BRANCH_NAME == 'master') {
+                sh 'docker images|grep none|awk \'{print $3 }\'|xargs docker rmi'
+            } else {
+                echo 'I only execute on the master branch'
+            }
+            
           }
         }
         stage('Deploy to MagnetSearcher.Daemon Server') {
@@ -54,9 +68,13 @@ pipeline {
             SERVER_IP=credentials('4f50de2e-ab27-48fd-9cc1-4f69be1d510b')
           }
           steps {
-            sh 'sshpass -p $SERVER_CREDENTIALS_PSW scp -r ./MagnetSearcher.Daemon/app/out $SERVER_CREDENTIALS_USR@$SERVER_IP:/home/MagnetSearcher.Daemon '
-            sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/MagnetSearcher.Daemon && pm2 restart dotnet"'
-          }
+            if (env.BRANCH_NAME == 'master') {
+                sh 'sshpass -p $SERVER_CREDENTIALS_PSW scp -r ./MagnetSearcher.Daemon/app/out $SERVER_CREDENTIALS_USR@$SERVER_IP:/home/MagnetSearcher.Daemon '
+                sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/MagnetSearcher.Daemon && pm2 restart dotnet"'
+            } else {
+                echo 'I only execute on the master branch'
+            }
+                      }
         }
         stage('Deploy to MagnetSearcher Server') {
           environment {
@@ -64,7 +82,11 @@ pipeline {
             SERVER_IP=credentials('3e762d69-418d-4283-95ac-913f19d7fe4e')
           }
           steps {
-            sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/typecho && docker pull registry.miaostay.com/magnetsearcher && docker-compose up -d"'
+            if (env.BRANCH_NAME == 'master') {
+                sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/typecho && docker pull registry.miaostay.com/magnetsearcher && docker-compose up -d"'
+            } else {
+                echo 'I only execute on the master branch'
+            }
           }
         }
       }
