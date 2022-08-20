@@ -13,8 +13,16 @@ namespace MagnetSearcher.Controllers {
             this.Bus = bus;
         }
         [HttpPost("add/{token}")]
-        public async Task<IActionResult> AddMagnet(string token, [FromBody] MagnetInfo info) {
+        public async Task<IActionResult> AddMagnet(string token, [FromBody] MagnetInfoJson infoJson) {
             if (token.Equals(Env.RootToken) || Env.RootToken.Equals(string.Empty)) {
+                var info = new MagnetInfo() {
+                    Files = new List<MagnetFile>(),
+                    GetDateTime = infoJson.GetDateTime,
+                    InfoHash = infoJson.InfoHash,
+                    Length = infoJson.Length,
+                    Name = infoJson.Name,
+                    RawMetaDataBase64 = infoJson.RawMetaDataBase64
+                };
                 await Bus.PubSub.PublishAsync(info);
                 return Ok(info);
             } else {
