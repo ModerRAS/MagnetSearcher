@@ -7,7 +7,7 @@ namespace MagnetSearcher.Models {
         public string InfoHash { get; set; }
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        [JsonProperty(PropertyName = "files")]
+        [JsonProperty(PropertyName = "files", NullValueHandling = NullValueHandling.Ignore)]
         public List<MagnetFile> Files { get; set; }
         [JsonProperty(PropertyName = "length")]
         public long Length { get; set; }
