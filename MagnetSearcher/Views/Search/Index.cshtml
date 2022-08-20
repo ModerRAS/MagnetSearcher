@@ -17,7 +17,7 @@
             @foreach (var info in Model.Info) {
                 <tr>
                     <td>
-                        <span>@DateTime.FromBinary(info.GetDateTime)</span>
+                        <span>@TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970,1,1)).Add(new TimeSpan(info.GetDateTime * 10000000))</span>
                     </td>
                     <td>
                         <span>@info.Name</span>
