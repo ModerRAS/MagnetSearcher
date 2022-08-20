@@ -69,7 +69,7 @@ pipeline {
             SERVER_IP = credentials('4f50de2e-ab27-48fd-9cc1-4f69be1d510b')
           }
           steps {
-            sh 'sshpass -p $SERVER_CREDENTIALS_PSW scp -r ./MagnetSearcher.Daemon/app/out $SERVER_CREDENTIALS_USR@$SERVER_IP:/home/MagnetSearcher.Daemon '
+            sh 'sshpass -p $SERVER_CREDENTIALS_PSW rsync -avz ./MagnetSearcher.Daemon/app/out/* $SERVER_CREDENTIALS_USR@$SERVER_IP:/home/MagnetSearcher.Daemon '
             sh 'sshpass -p $SERVER_CREDENTIALS_PSW ssh $SERVER_CREDENTIALS_USR@$SERVER_IP "cd /home/MagnetSearcher.Daemon && pm2 restart dotnet"'
           }
         }
