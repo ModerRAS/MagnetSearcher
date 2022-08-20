@@ -1,14 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
-
 namespace MagnetSearcher {
     public class Program {
         public static void Main(string[] args) {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews().AddNewtonsoftJson(option => {
-                option.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            });
+            builder.Services.AddControllersWithViews();
             builder.Services.RegisterEasyNetQ(Env.EasyNetQConnectiongString);
 
             var app = builder.Build();
