@@ -24,7 +24,7 @@ namespace MagnetSearcher.Controllers {
                     RawMetaDataBase64 = infoJson.RawMetaDataBase64
                 };
                 await Bus.PubSub.PublishAsync(info);
-                return Ok(info);
+                return Ok();
             } else {
                 return Forbid();
             }
