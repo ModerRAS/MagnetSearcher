@@ -17,7 +17,7 @@
             @foreach (var info in Model.Info) {
                 <tr>
                     <td>
-                        <span>@TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970,1,1)).Add(new TimeSpan(long.Parse(info.GetDateTime.ToString() + "0000000")))</span>
+                        <span>@info.DateTime</span>
                     </td>
                     <td>
                         <span>@info.Name</span>

@@ -15,5 +15,10 @@ namespace MagnetSearcher.Models {
         public string RawMetaDataBase64 { get; set; }
         [JsonProperty(PropertyName = "getdatetime")]
         public long GetDateTime { get; set; }
+        public DateTime DateTime { 
+            get { 
+                return TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1)).Add(new TimeSpan(GetDateTime * 10000000)); 
+            } 
+        }
     }
 }
