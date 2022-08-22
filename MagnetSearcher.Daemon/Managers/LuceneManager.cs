@@ -12,9 +12,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using MagnetSearcher.Models;
+using MagnetSearcher.Daemon.Interfaces;
 
 namespace MagnetSearcher.Daemon.Managers {
-    public class LuceneManager {
+    public class LuceneManager : ISearchManager<MagnetInfo> {
         public LuceneManager() {
         }
         public async Task WriteDocumentAsync(MagnetInfo info) {
@@ -80,7 +81,8 @@ namespace MagnetSearcher.Daemon.Managers {
             }
             return keyworkds;
         }
-        public (int, List<MagnetInfo>) Search(string q, int Skip, int Take) {
+
+        public void Search(string q, int Skip, int Take, out int Count, out List<MagnetInfo> SearchResult) {
             IndexReader reader = DirectoryReader.Open(FSDirectory.Open($"{Env.BasePath}/Data/Index_Data_0"));
 
             var searcher = new IndexSearcher(reader);
@@ -106,7 +108,28 @@ namespace MagnetSearcher.Daemon.Managers {
                     Files = !string.IsNullOrEmpty(document.Get("Files")) ? JsonConvert.DeserializeObject<List<MagnetFile>>(document.Get("Files")) : new List<MagnetFile>()
                 });
             }
-            return (total, magnetInfos);
+            Count = total;
+            SearchResult = magnetInfos;
+        }
+
+        public Task SearchAsync(string q, int Skip, int Take, out int Count, out List<MagnetInfo> SearchResult) {
+            throw new NotImplementedException();
+        }
+
+        public void Add(MagnetInfo info) {
+            WriteDocumentAsync(info).Wait();
+        }
+
+        public async Task AddAsync(MagnetInfo info) {
+            await WriteDocumentAsync(info);
+        }
+
+        public void AddRange(IEnumerable<MagnetInfo> infos) {
+            WriteDocuments(infos);
+        }
+
+        public async Task AddRangeAsync(IEnumerable<MagnetInfo> infos) {
+            await Task.Run(() => WriteDocuments(infos));
         }
     }
 }

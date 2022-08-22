@@ -9,12 +9,14 @@ using System.Threading.Tasks;
 
 namespace MagnetSearcher.Daemon.Services {
     public class SearchService : IService<RequestSearchOption, ResponseSearchOption> {
-        private LuceneManager luceneManager { get; set; }
-        public SearchService(LuceneManager luceneManager) {
-            this.luceneManager = luceneManager;
+        private ISearchManager<MagnetInfo> searchManager { get; set; }
+        public SearchService(ISearchManager<MagnetInfo> searchManager) {
+            this.searchManager = searchManager;
         }
         public async Task<ResponseSearchOption> ExecAsync(RequestSearchOption data) {
-            var (total, MagnetInfos) = luceneManager.Search(data.KeyWord, data.Skip, data.Take);
+            int total;
+            List<MagnetInfo> MagnetInfos;
+            searchManager.Search(data.KeyWord, data.Skip, data.Take, out total, out MagnetInfos);
             return new ResponseSearchOption() {
                 Id = data.Id,
                 Count = total,

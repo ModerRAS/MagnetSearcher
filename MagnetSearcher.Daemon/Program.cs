@@ -6,6 +6,7 @@ using EasyNetQ.DI;
 using MagnetSearcher.Daemon.Interfaces;
 using MagnetSearcher.Daemon.Services;
 using MagnetSearcher.Daemon.Managers;
+using MagnetSearcher.Models;
 
 namespace MagnetSearcher.Daemon {
     public static class Program {
@@ -13,7 +14,7 @@ namespace MagnetSearcher.Daemon {
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices(service => {
                     service.AddSingleton<ILoggerFactory, LoggerFactory>();
-                    service.AddSingleton<LuceneManager>();
+                    service.AddSingleton<ISearchManager<MagnetInfo>, MeiliManager>();
                     service.AddScoped<MagnetService>();
                     service.AddScoped<SearchService>();
                     service.RegisterEasyNetQ(Env.EasyNetQConnectiongString);
@@ -23,6 +24,9 @@ namespace MagnetSearcher.Daemon {
                         .AsImplementedInterfaces()
                         .WithTransientLifetime()
                     );
+                }).ConfigureLogging((logging) => {
+                    logging.AddConsole();
+                    logging.SetMinimumLevel(LogLevel.Information);
                 });
         public static void Main(string[] args) {
             IHost host = CreateHostBuilder(args)
