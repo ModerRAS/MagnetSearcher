@@ -18,12 +18,12 @@ namespace MagnetSearcher.Daemon.Services {
             var magnetInfo = db.GetCollection<MagnetInfo>("MagnetInfo");
 
             var MagnetIsExists = magnetInfo.Find(magnet => magnet.InfoHash.Equals(data.InfoHash));
-            var first = MagnetIsExists.First();
+            
             if (!MagnetIsExists.Any()) {
                 magnetInfo.Insert(data);
                 magnetInfo.EnsureIndex(x => x.InfoHash);
                 await luceneManager.WriteDocumentAsync(data);
-            } else if (string.IsNullOrEmpty(first.RawMetaDataBase64)) {
+            } else if (string.IsNullOrEmpty(MagnetIsExists.First().RawMetaDataBase64)) {
                 magnetInfo.Update(data);
             }
             return true;
