@@ -14,11 +14,9 @@ namespace MagnetSearcher.Daemon.Controllers {
     public class ErrorController : IController {
         private IBus Bus { get; set; }
         private ILogger Logger { get; set; }
-        private ErrorService ErrorService { get; set; }
         private const string QueueName = "EasyNetQ_Default_Error_Queue";
-        public ErrorController(IBus bus, ErrorService errorService, ILogger logger) {
+        public ErrorController(IBus bus, ILogger logger) {
             Bus = bus;
-            ErrorService = errorService;
             Logger = logger;
         }
         public async Task ExecAsync() {
