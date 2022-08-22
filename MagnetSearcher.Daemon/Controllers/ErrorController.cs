@@ -24,7 +24,11 @@ namespace MagnetSearcher.Daemon.Controllers {
             var queue = new Queue(QueueName, false);
 
             Action<IMessage<Error>, MessageReceivedInfo> foo = (error, info) => {
-                Logger.Log(LogLevel.Information, error.Body.Message);
+                Logger.Log(LogLevel.Warning, error.Body.Exchange);
+                Logger.Log(LogLevel.Warning, error.Body.Queue);
+                Logger.Log(LogLevel.Warning, error.Body.Exception);
+                Logger.Log(LogLevel.Warning, error.Body.Message);
+                Logger.Log(LogLevel.Warning, error.Body.DateTime);
             };
 
             Bus.Advanced.Consume<Error>(queue, foo);
