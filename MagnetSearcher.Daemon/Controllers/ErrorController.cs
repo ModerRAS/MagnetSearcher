@@ -28,7 +28,7 @@ namespace MagnetSearcher.Daemon.Controllers {
                 Logger.Log(LogLevel.Warning, error.Body.Queue);
                 Logger.Log(LogLevel.Warning, error.Body.Exception);
                 Logger.Log(LogLevel.Warning, error.Body.Message);
-                Logger.Log(LogLevel.Warning, error.Body.DateTime);
+                Logger.Log(LogLevel.Warning, error.Body.DateTime.ToString());
             };
 
             Bus.Advanced.Consume<Error>(queue, foo);
