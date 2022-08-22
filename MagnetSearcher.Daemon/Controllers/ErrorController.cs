@@ -15,7 +15,7 @@ namespace MagnetSearcher.Daemon.Controllers {
         private IBus Bus { get; set; }
         private ILogger Logger { get; set; }
         private const string QueueName = "EasyNetQ_Default_Error_Queue";
-        public ErrorController(IBus bus, ILogger logger) {
+        public ErrorController(IBus bus, ILogger<ErrorController> logger) {
             Bus = bus;
             Logger = logger;
         }
