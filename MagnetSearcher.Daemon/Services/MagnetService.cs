@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace MagnetSearcher.Daemon.Services {
     public class MagnetService : IService<MagnetInfo, bool>{
-        private LuceneManager luceneManager { get; set; }
-        public MagnetService(LuceneManager luceneManager) { 
-            this.luceneManager = luceneManager;
+        private ISearchManager<MagnetInfo> iSearchManager { get; set; }
+        public MagnetService(ISearchManager<MagnetInfo> iSearchManager) { 
+            this.iSearchManager = iSearchManager;
         }
         public async Task<bool> ExecAsync(MagnetInfo data) {
             var db = Env.DHTDatabase;
@@ -22,7 +22,7 @@ namespace MagnetSearcher.Daemon.Services {
             if (!MagnetIsExists.Any()) {
                 magnetInfo.Insert(data);
                 magnetInfo.EnsureIndex(x => x.InfoHash);
-                await luceneManager.WriteDocumentAsync(data);
+                await iSearchManager.AddAsync(data);
             } else if (string.IsNullOrEmpty(MagnetIsExists.First().RawMetaDataBase64)) {
                 magnetInfo.Update(data);
             }
