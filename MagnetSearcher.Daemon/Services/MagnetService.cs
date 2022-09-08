@@ -28,5 +28,12 @@ namespace MagnetSearcher.Daemon.Services {
             }
             return true;
         }
+        public async Task<bool> IndexAllAsync() {
+            var db = Env.DHTDatabase;
+            var magnetInfo = db.GetCollection<MagnetInfo>("MagnetInfo");
+            var all = magnetInfo.FindAll();
+            await iSearchManager.AddRangeAsync(all);
+            return true;
+        }
     }
 }
