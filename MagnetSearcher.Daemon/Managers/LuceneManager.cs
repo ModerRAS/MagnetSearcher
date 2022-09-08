@@ -82,7 +82,7 @@ namespace MagnetSearcher.Daemon.Managers {
             return keyworkds;
         }
 
-        public void Search(string q, int Skip, int Take, out int Count, out List<MagnetInfo> SearchResult) {
+        public CommonSearchResult<MagnetInfo> Search(string q, int Skip, int Take) {
             IndexReader reader = DirectoryReader.Open(FSDirectory.Open($"{Env.BasePath}/Data/Index_Data_0"));
 
             var searcher = new IndexSearcher(reader);
@@ -108,13 +108,12 @@ namespace MagnetSearcher.Daemon.Managers {
                     Files = !string.IsNullOrEmpty(document.Get("Files")) ? JsonConvert.DeserializeObject<List<MagnetFile>>(document.Get("Files")) : new List<MagnetFile>()
                 });
             }
-            Count = total;
-            SearchResult = magnetInfos;
+            return new CommonSearchResult<MagnetInfo>() {
+                Count = total,
+                Result = magnetInfos,
+            };
         }
 
-        public Task SearchAsync(string q, int Skip, int Take, out int Count, out List<MagnetInfo> SearchResult) {
-            throw new NotImplementedException();
-        }
 
         public void Add(MagnetInfo info) {
             WriteDocumentAsync(info).Wait();
@@ -130,6 +129,10 @@ namespace MagnetSearcher.Daemon.Managers {
 
         public async Task AddRangeAsync(IEnumerable<MagnetInfo> infos) {
             await Task.Run(() => WriteDocuments(infos));
+        }
+
+        public Task<CommonSearchResult<MagnetInfo>> SearchAsync(string q, int Skip, int Take) {
+            throw new NotImplementedException();
         }
     }
 }

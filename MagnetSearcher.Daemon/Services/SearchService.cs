@@ -16,12 +16,12 @@ namespace MagnetSearcher.Daemon.Services {
         public async Task<ResponseSearchOption> ExecAsync(RequestSearchOption data) {
             int total;
             List<MagnetInfo> MagnetInfos;
-            searchManager.Search(data.KeyWord, data.Skip, data.Take, out total, out MagnetInfos);
+            var result = await searchManager.SearchAsync(data.KeyWord, data.Skip, data.Take);
             return new ResponseSearchOption() {
                 Id = data.Id,
-                Count = total,
+                Count = result.Count,
                 KeyWord = data.KeyWord,
-                Info = MagnetInfos,
+                Info = result.Result,
                 Skip = data.Skip,
                 Take = data.Take
             };
