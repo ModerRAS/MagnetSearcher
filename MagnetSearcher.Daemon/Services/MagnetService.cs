@@ -32,7 +32,9 @@ namespace MagnetSearcher.Daemon.Services {
             var db = Env.DHTDatabase;
             var magnetInfo = db.GetCollection<MagnetInfo>("MagnetInfo");
             var all = magnetInfo.FindAll();
-            await iSearchManager.AddRangeAsync(all);
+            foreach(var e in all) {
+                await iSearchManager.AddAsync(e);
+            }
             return true;
         }
     }
